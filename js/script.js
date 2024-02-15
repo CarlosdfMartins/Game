@@ -10,6 +10,12 @@ const charmander = document.querySelector('#charmander');
 const pikachu = document.querySelector('#pikachu');
 const zubat = document.querySelector('#zubat');
 
+
+let findCharmander = false;
+let findZubat = false;
+let findPikachu = false;
+
+
 const audio = document.querySelector("audio");
 audio.volume = 0.1;
 
@@ -24,13 +30,63 @@ musicControl.addEventListener('click', (event) => {
 
 
 
-
 function getRightPosition() {
     return parseInt(ash.style.right.split("px")) || 2;
 }
 
 function getTopPosition() {
     return parseInt(ash.style.top.split("px")) || 2;
+}
+
+
+
+function verifyLookPokemon(to) {
+
+    const pokemonRightPosition = to === "ArrowLeft" ? `${getRightPosition() - 64}px` : `${getRightPosition() + 64}px`;
+
+    if (findCharmander) {
+        const newTopPosition = (to = "ArrowUP" ? `${getTopPosition() + 8}px` : `${getTopPosition() - 8}px`);
+
+        charmander.style.right = pokemonRightPosition;
+        charmander.style.top = newTopPosition;
+    }
+
+
+    if (findZubat) {
+        const newTopPosition = (to = 'ArrowUP' ? `${getTopPosition() + 36}px` : `${getTopPosition() - 36}px`);
+
+        zubat.style.right = pokemonRightPosition;
+        zubat.style.top = newTopPosition;
+    }
+
+
+    if (findPikachu) {
+        const newTopPosition = (to = 'ArrowUP' ? `${getTopPosition() + 72}px` : `${getTopPosition() - 72}px`);
+
+        pikachu.style.right = pokemonRightPosition;
+        pikachu.style.top = newTopPosition;
+    }
+
+
+
+    if (getTopPosition() >= 2 && getTopPosition() <= 98 && getRightPosition() >= 130 && getRightPosition() <= 216) {
+        charmander.style.display = "block";
+        findCharmander = true;
+        return;
+    }
+
+    if (getTopPosition() >= 474 && getTopPosition() <= 594 && getRightPosition() <= 138 && getRightPosition() >= 42) {
+        zubat.style.display = "block";
+        findZubat = true;
+        return;
+    }
+
+    if (getTopPosition() >= 266 && getTopPosition() <= 394 && getRightPosition() >= 546 && getRightPosition() <= 650) {
+        pikachu.style.display = "block";
+        findPikachu = true;
+        return;
+    }
+
 }
 
 
@@ -71,4 +127,5 @@ body.addEventListener('keydown', (event) => {
         default:
             break;
     }
+    verifyLookPokemon(event.code);
 });
