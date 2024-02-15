@@ -43,7 +43,7 @@ function clearCharactersAndFinishGame() {
   count.textContent = " ";
 }
 
-let currentCount = 15;
+let currentCount = 30;
 
 const interval = setInterval(() => {
   if (currentCount <= 0) {
